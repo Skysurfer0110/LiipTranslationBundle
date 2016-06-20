@@ -176,7 +176,7 @@ class TranslationController extends BaseController
 
     protected function createFilterForm(array $filters = array())
     {
-        return $this->createForm(new FilterType::class, $filters, [
+        return $this->createForm(FilterType::class, $filters, [
             'authorizedLocale' => $this->getAuthorizedLocale(),
             'domainList' => $this->getRepository()->getDomainList(),
         ]);

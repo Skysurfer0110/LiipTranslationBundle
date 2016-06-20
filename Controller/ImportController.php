@@ -33,7 +33,7 @@ class ImportController extends BaseController
     public function indexAction()
     {
         return $this->render('LiipTranslationBundle:Import:index.html.twig', array(
-            'upload_form' => $this->createForm(new FileImportType::class)->createView(),
+            'upload_form' => $this->createForm(FileImportType::class)->createView(),
             'translations' => $this->getSessionImporter()->getCurrentTranslations(),
         ));
     }
@@ -59,7 +59,7 @@ class ImportController extends BaseController
      */
     public function uploadAction(Request $request)
     {
-        $form = $this->createForm(new FileImportType::class);
+        $form = $this->createForm(FileImportType::class);
         $data = $form->handleRequest($request)->getData();
         $session = $this->getSession();
 
