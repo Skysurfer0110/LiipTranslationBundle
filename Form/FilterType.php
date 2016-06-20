@@ -2,6 +2,9 @@
 
 namespace Liip\TranslationBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -20,45 +23,47 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class FilterType extends CompatibleAbstractType
 {
-    private $locales;
-    private $domains;
-
-    public function __construct(array $locales, array $domains)
-    {
-        $this->locales = count($locales) > 0 ? array_combine($locales, $locales) : array();
-        $this->domains = count($domains) > 0 ? array_combine($domains, $domains) : array();
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $locales = $options['locales'];
+        $domains = $options['domains'];
+
         $builder
-            ->add('empty', 'checkbox', $this->decorateOption(array(
+            ->add('empty', CheckboxType::class, $this->decorateOption(array(
                 'required' => false,
                 'label' => 'form.filter.empty',
             ), $options))
-            ->add('domain', 'choice', $this->decorateOption(array(
-                'choices' => $this->domains,
+            ->add('domain', ChoiceType::class, $this->decorateOption(array(
+                'choices' => $domains,
                 'multiple' => true,
                 'expanded' => true,
                 'required' => false,
                 'label' => 'form.filter.domain',
             ), $options))
-            ->add('languages', 'choice', $this->decorateOption(array(
-                'choices' => $this->locales,
+            ->add('languages', ChoiceType::class, $this->decorateOption(array(
+                'choices' => $locales,
                 'multiple' => true,
                 'expanded' => true,
                 'required' => false,
                 'label' => 'form.filter.locale',
             ), $options))
-            ->add('key', 'text', $this->decorateOption(array(
+            ->add('key', TextType::class, $this->decorateOption(array(
                 'required' => false,
                 'label' => 'form.filter.key',
             ), $options))
-            ->add('value', 'text', $this->decorateOption(array(
+            ->add('value', TextType::class, $this->decorateOption(array(
                 'required' => false,
                 'label' => 'form.filter.value',
             ), $options))
         ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'locales' => [],
+            'domains' => [],
+        ]);
     }
 
     public function getName()

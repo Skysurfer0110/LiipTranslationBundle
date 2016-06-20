@@ -177,8 +177,9 @@ class TranslationController extends BaseController
     protected function createFilterForm(array $filters = array())
     {
         return $this->createForm(FilterType::class, $filters, [
-            'authorizedLocale' => $this->getAuthorizedLocale(),
-            'domainList' => $this->getRepository()->getDomainList(),
+            'locales' => $this->getAuthorizedLocale(),
+            'domains' => $this->getRepository()->getDomainList(),
+            'action' => $this->generateUrl('liip_translation_filter'),
         ]);
     }
 }
