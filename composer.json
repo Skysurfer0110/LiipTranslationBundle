@@ -1,5 +1,5 @@
 {
-    "name": "liip/translation-bundle",
+    "name": "skysurfer0110/translation-bundle",
     "type": "symfony-bundle",
     "description": "provide various tools to ease translation management",
     "keywords": ["translation", "i18n"],
